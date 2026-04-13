@@ -25,6 +25,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     <a href="verbs383-416.html" class="${currentPage === 'verbs383-416.html' ? 'active' : ''}">📘 动词 383-416</a>
                 </div>
             </details>
+
+             <!-- 新增词形变化下拉菜单 -->
+            <details class="dropdown">
+                <summary>📐 词形变化</summary>
+                <div class="dropdown-menu">
+                    <a href="morphology-topic1-3" class="${currentPage === 'morphology-topic1-3' ? 'active' : ''}">🔤 话题1-3词形变化</a>
+                    <a href="morphology-topic4-6" class="${currentPage === 'morphology-topic4-6' ? 'active' : ''}">🔤 话题4-6词形变化</a>
+                    <a href="morphology-topic7-9" class="${currentPage === 'morphology-topic7-9' ? 'active' : ''}">🔤 话题7-9词形变化</a>
+                    <a href="noun-plurals.html" class="${currentPage === 'noun-plurals.html' ? 'active' : ''}">🔤 名词复数</a>
+                    <a href="adj-compare.html" class="${currentPage === 'adj-compare.html' ? 'active' : ''}">📊 形容词比较级</a>
+                </div>
+            </details>
         </nav>
     `;
 
