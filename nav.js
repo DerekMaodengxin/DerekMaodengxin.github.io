@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navHTML = `
         <nav class="site-nav">
             <a href="index.html" class="${currentPage === 'index.html' ? 'active' : ''}">🏠 首页-不规则动词</a>
-            <a href="Nonfinite%20verbs.html" class="${currentPage === 'Nonfinite verbs.html' ? 'active' : ''}">📖 非谓语动词搭配</a>
+            <a href="nonfinite-verbs.html" class="${currentPage === 'nonfinite-verbs.html' ? 'active' : ''}">📖 非谓语动词搭配</a>
             <details class="dropdown" ${currentPage.startsWith('verbs') ? 'open' : ''}>
                 <summary>📚 动词列表（1-416） ▼</summary>
                 <div class="dropdown-menu">
