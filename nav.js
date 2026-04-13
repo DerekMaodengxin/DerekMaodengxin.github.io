@@ -37,6 +37,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     <a href="adj-compare.html" class="${currentPage === 'adj-compare.html' ? 'active' : ''}">📊 形容词比较级</a>
                 </div>
             </details>
+
+             <!-- 新增短语专题下拉菜单 -->
+            <details class="dropdown">
+                <summary>📝 短语专题</summary>
+                <div class="dropdown-menu">
+                    <a href="phrases-topic1-3.html" class="${currentPage === 'phrases-topic1-3.html' ? 'active' : ''}">🔤 话题1-3短语</a>
+                    <a href="phrases-topic4-6.html" class="${currentPage === 'phrases-topic4-6.html' ? 'active' : ''}">🔤 话题4-6短语</a>
+                    <a href="phrases-topic7-9.html" class="${currentPage === 'phrases-topic7-9.html' ? 'active' : ''}">🔤 话题7-9短语</a>
+                    <a href="phrases-verb.html" class="${currentPage === 'phrases-verb.html' ? 'active' : ''}">🔤 动词短语</a>
+                    <a href="phrases-prep.html" class="${currentPage === 'phrases-prep.html' ? 'active' : ''}">📍 介词短语</a>
+                    <a href="phrases-noun.html" class="${currentPage === 'phrases-noun.html' ? 'active' : ''}">📦 名词短语</a>
+                    <a href="phrases-adj.html" class="${currentPage === 'phrases-adj.html' ? 'active' : ''}">🎨 形容词短语</a>
+            </div>
+        </details>
         </nav>
     `;
 
