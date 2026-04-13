@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <a href="index.html" class="${currentPage === 'index.html' ? 'active' : ''}">🏠 首页-不规则动词</a>
             <a href="nonfinite-verbs.html" class="${currentPage === 'nonfinite-verbs.html' ? 'active' : ''}">📖 非谓语动词搭配</a>
             <details class="dropdown" ${currentPage.startsWith('verbs') ? 'open' : ''}>
-                <summary>📚 动词列表（1-416） ▼</summary>
+                <summary>📚 动词列表（1-416） </summary>
                 <div class="dropdown-menu">
                     <a href="verbs1-40.html" class="${currentPage === 'verbs1-40.html' ? 'active' : ''}">📘 动词 1-40</a>
                     <a href="verbs41-80.html" class="${currentPage === 'verbs41-80.html' ? 'active' : ''}">📘 动词 41-80</a>
