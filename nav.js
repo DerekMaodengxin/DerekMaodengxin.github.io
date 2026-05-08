@@ -113,12 +113,12 @@ document.addEventListener('DOMContentLoaded', function() {
             <details class="dropdown" ${currentPage.startsWith('phrases') ? 'open' : ''}>
                 <summary>📝 单词和短语专题</summary>
                 <div class="dropdown-menu">
-                    <a href="wordsandphrases-topic1.html" class="${currentPage === 'wordsandphrases-topic1.html' ? 'active' : ''}">🏷️ 单词和短语 - 话题 1</a>
-                    <a href="wordsandphrases-topic2.html" class="${currentPage === 'wordsandphrases-topic2.html' ? 'active' : ''}">🏷️ 单词和短语 - 话题 2</a>
-                    <a href="wordsandphrases-topic3.html" class="${currentPage === 'wordsandphrases-topic3.html' ? 'active' : ''}">🏷️ 单词和短语 - 话题 3</a>
-                    <a href="wordsandphrases-topic4.html" class="${currentPage === 'wordsandphrases-topic4.html' ? 'active' : ''}">🏷️ 单词和短语 - 话题 4</a>
-                    <a href="wordsandphrases-topic5.html" class="${currentPage === 'wordsandphrases-topic5.html' ? 'active' : ''}">🏷️ 单词和短语 - 话题 5</a>
-                    <a href="wordsandphrases-topic6.html" class="${currentPage === 'wordsandphrases-topic6.html' ? 'active' : ''}">🏷️ 单词和短语 - 话题 6</a>
+                    <a href="wordsandphrases-topic1.html" class="${currentPage === 'wordsandphrases-topic1.html' ? 'active' : ''}">🏷️ 话题 1</a>
+                    <a href="wordsandphrases-topic2.html" class="${currentPage === 'wordsandphrases-topic2.html' ? 'active' : ''}">🏷️ 话题 2</a>
+                    <a href="wordsandphrases-topic3.html" class="${currentPage === 'wordsandphrases-topic3.html' ? 'active' : ''}">🏷️ 话题 3</a>
+                    <a href="wordsandphrases-topic4.html" class="${currentPage === 'wordsandphrases-topic4.html' ? 'active' : ''}">🏷️ 话题 4</a>
+                    <a href="wordsandphrases-topic5.html" class="${currentPage === 'wordsandphrases-topic5.html' ? 'active' : ''}">🏷️ 话题 5</a>
+                    <a href="wordsandphrases-topic6.html" class="${currentPage === 'wordsandphrases-topic6.html' ? 'active' : ''}">🏷️ 话题 6</a>
                     <a href="phrases-verb.html" class="${currentPage === 'phrases-verb.html' ? 'active' : ''}">🔤 动词短语</a>
                     <a href="phrases-prep.html" class="${currentPage === 'phrases-prep.html' ? 'active' : ''}">📍 介词短语</a>
                     <a href="phrases-noun.html" class="${currentPage === 'phrases-noun.html' ? 'active' : ''}">📦 名词短语</a>
