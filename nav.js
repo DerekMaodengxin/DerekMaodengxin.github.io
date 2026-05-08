@@ -119,6 +119,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     <a href="wordsandphrases-topic4.html" class="${currentPage === 'wordsandphrases-topic4.html' ? 'active' : ''}">🏷️ 话题 4</a>
                     <a href="wordsandphrases-topic5.html" class="${currentPage === 'wordsandphrases-topic5.html' ? 'active' : ''}">🏷️ 话题 5</a>
                     <a href="wordsandphrases-topic6.html" class="${currentPage === 'wordsandphrases-topic6.html' ? 'active' : ''}">🏷️ 话题 6</a>
+                    <a href="wordsandphrases-topic7.html" class="${currentPage === 'wordsandphrases-topic1.html' ? 'active' : ''}">🏷️ 话题 7</a>
+                    <a href="wordsandphrases-topic8.html" class="${currentPage === 'wordsandphrases-topic2.html' ? 'active' : ''}">🏷️ 话题 8</a>
+                    <a href="wordsandphrases-topic9.html" class="${currentPage === 'wordsandphrases-topic3.html' ? 'active' : ''}">🏷️ 话题 9</a>
+                    <a href="wordsandphrases-topic10.html" class="${currentPage === 'wordsandphrases-topic4.html' ? 'active' : ''}">🏷️ 话题 10</a>
+                    <a href="wordsandphrases-topic11.html" class="${currentPage === 'wordsandphrases-topic5.html' ? 'active' : ''}">🏷️ 话题 11</a>
+                    <a href="wordsandphrases-topic12.html" class="${currentPage === 'wordsandphrases-topic6.html' ? 'active' : ''}">🏷️ 话题 12</a>
+                    <a href="wordsandphrases-topic13.html" class="${currentPage === 'wordsandphrases-topic1.html' ? 'active' : ''}">🏷️ 话题 13</a>
+                    <a href="wordsandphrases-topic14.html" class="${currentPage === 'wordsandphrases-topic2.html' ? 'active' : ''}">🏷️ 话题 14</a>
+                    <a href="wordsandphrases-topic15.html" class="${currentPage === 'wordsandphrases-topic3.html' ? 'active' : ''}">🏷️ 话题 15</a>
+                    <a href="wordsandphrases-topic16.html" class="${currentPage === 'wordsandphrases-topic4.html' ? 'active' : ''}">🏷️ 话题 16</a>
+                    <a href="wordsandphrases-topic17.html" class="${currentPage === 'wordsandphrases-topic5.html' ? 'active' : ''}">🏷️ 话题 17</a>
+                    <a href="wordsandphrases-topic18.html" class="${currentPage === 'wordsandphrases-topic6.html' ? 'active' : ''}">🏷️ 话题 18</a>
+                    <a href="wordsandphrases-topic19.html" class="${currentPage === 'wordsandphrases-topic1.html' ? 'active' : ''}">🏷️ 话题 19</a>
+                    <a href="wordsandphrases-topic20.html" class="${currentPage === 'wordsandphrases-topic2.html' ? 'active' : ''}">🏷️ 话题 20</a>
+                    <a href="wordsandphrases-topic21.html" class="${currentPage === 'wordsandphrases-topic3.html' ? 'active' : ''}">🏷️ 话题 21</a>
+                    <a href="wordsandphrases-topic22.html" class="${currentPage === 'wordsandphrases-topic4.html' ? 'active' : ''}">🏷️ 话题 22</a>
+                    <a href="wordsandphrases-topic23.html" class="${currentPage === 'wordsandphrases-topic5.html' ? 'active' : ''}">🏷️ 话题 23</a>
+                    <a href="wordsandphrases-topic24.html" class="${currentPage === 'wordsandphrases-topic6.html' ? 'active' : ''}">🏷️ 话题 24</a>
+                    <a href="wordsandphrases-topic25.html" class="${currentPage === 'wordsandphrases-topic1.html' ? 'active' : ''}">🏷️ 话题 25</a>
                     <a href="phrases-verb.html" class="${currentPage === 'phrases-verb.html' ? 'active' : ''}">🔤 动词短语</a>
                     <a href="phrases-prep.html" class="${currentPage === 'phrases-prep.html' ? 'active' : ''}">📍 介词短语</a>
                     <a href="phrases-noun.html" class="${currentPage === 'phrases-noun.html' ? 'active' : ''}">📦 名词短语</a>
@@ -131,7 +150,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="dropdown-menu">
                     <a href="sentences-topic1.html" class="${currentPage === 'sentences-topic1.html' ? 'active' : ''}">📜 话题1句子</a>
                     <a href="sentences-topic2.html" class="${currentPage === 'sentences-topic2.html' ? 'active' : ''}">📜 话题2句子</a>
-                    <a href="sentences-topic3.html" class="${currentPage === 'sentences-topic3.html' ? 'active' : ''}">📜 话题3句子</a>                   
+                    <a href="sentences-topic3.html" class="${currentPage === 'sentences-topic3.html' ? 'active' : ''}">📜 话题3句子</a>
+                    <a href="sentences-topic4.html" class="${currentPage === 'sentences-topic1.html' ? 'active' : ''}">📜 话题4句子</a>
+                    <a href="sentences-topic5.html" class="${currentPage === 'sentences-topic2.html' ? 'active' : ''}">📜 话题5句子</a>
+                    <a href="sentences-topic6.html" class="${currentPage === 'sentences-topic3.html' ? 'active' : ''}">📜 话题6句子</a>  
+                    <a href="sentences-topic7.html" class="${currentPage === 'sentences-topic1.html' ? 'active' : ''}">📜 话题7句子</a>
+                    <a href="sentences-topic8.html" class="${currentPage === 'sentences-topic2.html' ? 'active' : ''}">📜 话题8句子</a>
+                    <a href="sentences-topic9.html" class="${currentPage === 'sentences-topic3.html' ? 'active' : ''}">📜 话题9句子</a>
+                    <a href="sentences-topic10.html" class="${currentPage === 'sentences-topic1.html' ? 'active' : ''}">📜 话题10句子</a>
+                    <a href="sentences-topic11.html" class="${currentPage === 'sentences-topic2.html' ? 'active' : ''}">📜 话题11句子</a>
+                    <a href="sentences-topic12.html" class="${currentPage === 'sentences-topic3.html' ? 'active' : ''}">📜 话题12句子</a>
+                    <a href="sentences-topic13.html" class="${currentPage === 'sentences-topic1.html' ? 'active' : ''}">📜 话题13句子</a>
+                    <a href="sentences-topic14.html" class="${currentPage === 'sentences-topic2.html' ? 'active' : ''}">📜 话题14句子</a>
+                    <a href="sentences-topic15.html" class="${currentPage === 'sentences-topic3.html' ? 'active' : ''}">📜 话题15句子</a>
+                    <a href="sentences-topic16.html" class="${currentPage === 'sentences-topic1.html' ? 'active' : ''}">📜 话题16句子</a>
+                    <a href="sentences-topic17.html" class="${currentPage === 'sentences-topic2.html' ? 'active' : ''}">📜 话题17句子</a>
+                    <a href="sentences-topic18.html" class="${currentPage === 'sentences-topic3.html' ? 'active' : ''}">📜 话题18句子</a>
+                    <a href="sentences-topic19.html" class="${currentPage === 'sentences-topic3.html' ? 'active' : ''}">📜 话题19句子</a>
+                    <a href="sentences-topic20.html" class="${currentPage === 'sentences-topic1.html' ? 'active' : ''}">📜 话题20句子</a>
+                    <a href="sentences-topic21.html" class="${currentPage === 'sentences-topic2.html' ? 'active' : ''}">📜 话题21句子</a>
+                    <a href="sentences-topic22.html" class="${currentPage === 'sentences-topic3.html' ? 'active' : ''}">📜 话题22句子</a>
+                    <a href="sentences-topic23.html" class="${currentPage === 'sentences-topic1.html' ? 'active' : ''}">📜 话题23句子</a>
+                    <a href="sentences-topic24.html" class="${currentPage === 'sentences-topic2.html' ? 'active' : ''}">📜 话题24句子</a>
+                    <a href="sentences-topic25.html" class="${currentPage === 'sentences-topic3.html' ? 'active' : ''}">📜 话题25句子</a> 
                 </div>
             </details>
         </nav>
