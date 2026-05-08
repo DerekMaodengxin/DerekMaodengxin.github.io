@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语单词检测系统 - 完整题库版</title>
+    <link rel="stylesheet" href="common.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-language"></i> 英语单词检测系统</h1>
+        <p>检测学生对单词表的掌握情况。支持显示全部单词或随机选择20个单词两种模式。</p>
+        <div id="nav-placeholder"></div>
+        <script src="nav.js"></script>
+    </div>
+    
+    <div class="instructions">
+        <h3><i class="fas fa-info-circle"></i> 使用说明</h3>
+        <ul>
+            <li><strong>中译英模式</strong>：显示单词的词性和中文释义，学生需要拼写出对应的英文单词</li>
+            <li><strong>英译中模式</strong>：显示英文单词，学生需要说出对应的中文释义和词性</li>
+            <li><strong>显示全部单词</strong>：显示题库中的所有单词，适合全面复习</li>
+            <li><strong>随机选择20个</strong>：随机选择最多20个单词，适合课堂检测</li>
+            <li><strong>发音功能</strong>：点击单词卡片右上角的喇叭图标<span style="color:#4a6fa5"><i class="fas fa-volume-up"></i></span>可以收听单词发音</li>
+            <li><strong>洗牌</strong>：打乱当前显示单词的顺序</li>
+            <li><strong>揭示答案</strong>：显示当前模式下隐藏的答案（英文单词或中文释义）</li>
+            <li><strong>切换模式</strong>：在中译英和英译中模式之间切换</li>
+            <li><strong>隐藏所有答案</strong>：隐藏所有已显示的答案，恢复初始状态</li>
+            <li><strong>单击单个题目</strong>：点击任意单词卡片可以显示/隐藏该单词的答案</li>
+        </ul>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number" id="totalWords">0</div>
+            <div class="stat-label">题库单词总数</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="displayCount">0</div>
+            <div class="stat-label">当前显示单词</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="revealedCount">0</div>
+            <div class="stat-label">已揭示答案</div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <div class="speech-rate-control">
+            <span>发音速度:</span>
+            <select id="speechRate">
+                <option value="0.7">慢速</option>
+                <option value="1" selected>正常</option>
+                <option value="1.3">快速</option>
+            </select>
+            <span>发音口音:</span>
+            <select id="speechAccent">
+                <option value="en-US">美式英语</option>
+                <option value="en-GB">英式英语</option>
+                <option value="en-AU">澳大利亚英语</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="btn btn-primary" id="shuffleBtn">
+            <i class="fas fa-random"></i> 洗牌（打乱顺序）
+        </button>
+        <button class="btn btn-secondary" id="revealBtn">
+            <i class="fas fa-eye"></i> 揭示全部答案
+        </button>
+        <button class="btn btn-info" id="hideBtn">
+            <i class="fas fa-eye-slash"></i> 隐藏所有答案
+        </button>
+        <button class="btn btn-warning" id="modeBtn">
+            <i class="fas fa-exchange-alt"></i> 切换检测模式
+        </button>
+        <button class="btn btn-success" id="displayModeBtn">
+            <i class="fas fa-list"></i> 显示全部单词
+        </button>
+        <div class="mode-indicator">
+            <i class="fas fa-clipboard-list"></i> 当前模式：<span id="currentMode">中译英模式</span>
+        </div>
+        <div class="display-mode">
+            <i class="fas fa-display"></i> 显示模式：<span id="displayMode">随机20个</span>
+        </div>
+    </div>
+    
+    <div class="word-container" id="wordContainer">
+        <!-- 单词卡片将通过JavaScript动态生成 -->
+    </div>
+    
+    <div class="footer">
+        <p>单词检测系统 &copy; 2023 | 提示：点击单个单词卡片可以显示/隐藏该单词的答案，点击右上角喇叭图标收听发音</p>
+        <p>发音功能基于浏览器Web Speech API，如需更换检测的单词，请修改代码中"题库数据"部分</p>
+        <p id="speechSupport"></p>
+    </div>
+
+    <script>
+        // ==================== 题库数据 ====================
+        // 您可以在这里修改、添加或删除单词
+        // 格式: { word: "英文单词", pronunciation: "音标", pos: "词性", meaning: "中文释义" }
+        // 如果您有外部音频资源，可以添加audioUrl字段
+        const wordList = [
+            // 这里放置您的单词数据
+            // 话题复习 - 单词和短语 (话题2)
+{ word: "hobby", pronunciation: "", pos: "n.", meaning: "业余爱好;嗜好" },
+{ word: "habit", pronunciation: "", pos: "n.", meaning: "习惯;习性" },
+{ word: "interest", pronunciation: "", pos: "n.&v.", meaning: "兴趣;使感兴趣" },
+{ word: "write", pronunciation: "", pos: "v.", meaning: "写作" },
+{ word: "read", pronunciation: "", pos: "v.", meaning: "阅读" },
+{ word: "love", pronunciation: "", pos: "v.&n.", meaning: "爱;热爱" },
+{ word: "prefer", pronunciation: "", pos: "v.", meaning: "更喜欢" },
+{ word: "enjoy", pronunciation: "", pos: "v.", meaning: "欣赏;享受...之乐" },
+{ word: "hate", pronunciation: "", pos: "v.&n.", meaning: "憎恨;讨厌" },
+{ word: "suppose", pronunciation: "", pos: "v.", meaning: "推断;料想" },
+{ word: "praise", pronunciation: "", pos: "v.&n.", meaning: "表扬;赞扬" },
+{ word: "quite", pronunciation: "", pos: "adv.", meaning: "完全;十分" },
+{ word: "attract", pronunciation: "", pos: "v.", meaning: "吸引" },
+{ word: "fun", pronunciation: "", pos: "n.", meaning: "乐趣;趣事" },
+{ word: "favorite", pronunciation: "", pos: "adj.&n.", meaning: "特别受喜爱的;特别喜爱的人或物" },
+{ word: "sense", pronunciation: "", pos: "n.&v.", meaning: "感觉;意识;意识到" },
+{ word: "like", pronunciation: "", pos: "v.&prep.", meaning: "喜欢;像...一样" },
+{ word: "fall in love with...", pronunciation: "", pos: "ph-", meaning: "爱上..." },
+{ word: "be fond of...", pronunciation: "", pos: "ph-", meaning: "喜欢" },
+{ word: "be interested in...", pronunciation: "", pos: "ph-", meaning: "对...感兴趣" },
+{ word: "be good with", pronunciation: "", pos: "ph-", meaning: "善于应付..." },
+{ word: "be good at.../do well in...", pronunciation: "", pos: "ph-", meaning: "擅长于..." },
+{ word: "be crazy/mad about...", pronunciation: "", pos: "ph-", meaning: "对...着迷;热衷于" },
+
+// 2. 文化和艺术
+{ word: "paint", pronunciation: "", pos: "n.&v.", meaning: "油漆;(用颜料等)画" },
+{ word: "perform", pronunciation: "", pos: "v.", meaning: "表演" },
+{ word: "talent/gift", pronunciation: "", pos: "n.", meaning: "天资;天赋" },
+{ word: "opera", pronunciation: "", pos: "n.", meaning: "歌剧" },
+{ word: "dance", pronunciation: "", pos: "n.&v.", meaning: "跳舞" },
+{ word: "sing", pronunciation: "", pos: "v.", meaning: "唱歌" },
+{ word: "show", pronunciation: "", pos: "n.&v.", meaning: "演出;节目;展示" },
+{ word: "joy", pronunciation: "", pos: "n.", meaning: "欢乐;高兴" },
+{ word: "draw", pronunciation: "", pos: "v.", meaning: "绘画;拖;拉" },
+{ word: "science", pronunciation: "", pos: "n.", meaning: "科学" },
+{ word: "math/maths", pronunciation: "", pos: "n.", meaning: "数学" },
+{ word: "geography", pronunciation: "", pos: "n.", meaning: "地理" },
+{ word: "history", pronunciation: "", pos: "n.", meaning: "历史" },
+{ word: "read novels", pronunciation: "", pos: "ph-", meaning: "看小说" },
+{ word: "read newspapers/poems", pronunciation: "", pos: "ph-", meaning: "读报纸/诗" },
+{ word: "tell stories", pronunciation: "", pos: "ph-", meaning: "讲故事" },
+{ word: "listen to music", pronunciation: "", pos: "ph-", meaning: "听音乐" },
+{ word: "play the piano/guitar/violin/drums", pronunciation: "", pos: "ph-", meaning: "弹钢琴/吉他/拉小提琴/打鼓" },
+{ word: "pop/country/folk/classical music", pronunciation: "", pos: "ph-", meaning: "流行/乡村/民族/古典音乐" },
+{ word: "watch a movie/film", pronunciation: "", pos: "ph-", meaning: "看电影" },
+{ word: "go to a concert", pronunciation: "", pos: "ph-", meaning: "去听音乐会" },
+{ word: "musical instrument(s)", pronunciation: "", pos: "ph-", meaning: "乐器" },
+{ word: "give a speech", pronunciation: "", pos: "ph-", meaning: "演讲" },
+
+// 3. 运动和活动
+{ word: "travel", pronunciation: "", pos: "v.&n.", meaning: "旅游" },
+{ word: "surfing", pronunciation: "", pos: "n.", meaning: "冲浪" },
+{ word: "cheer sb. up", pronunciation: "", pos: "ph-", meaning: "使某人开心起来" },
+{ word: "exercise", pronunciation: "", pos: "v.&n.", meaning: "锻炼;练习" },
+{ word: "take up", pronunciation: "", pos: "ph-", meaning: "开始(从事);占用" },
+{ word: "game", pronunciation: "", pos: "n.", meaning: "游戏;运动;比赛" },
+{ word: "a fan of...", pronunciation: "", pos: "ph-", meaning: "...的迷" },
+{ word: "risk", pronunciation: "", pos: "n.", meaning: "风险;冒险" },
+{ word: "be good for", pronunciation: "", pos: "ph-", meaning: "对...有好处" },
+{ word: "be kind/good/friendly to...", pronunciation: "", pos: "ph-", meaning: "对...友好" },
+{ word: "camping", pronunciation: "", pos: "n.", meaning: "野营" },
+{ word: "fish", pronunciation: "", pos: "n.&v.", meaning: "鱼;钓鱼" },
+{ word: "cook", pronunciation: "", pos: "v.", meaning: "烹饪" },
+{ word: "skate", pronunciation: "", pos: "v.", meaning: "滑冰" },
+{ word: "swim", pronunciation: "", pos: "v.", meaning: "游泳" },
+{ word: "ski", pronunciation: "", pos: "v.", meaning: "滑雪" },
+{ word: "ride", pronunciation: "", pos: "v.&n.", meaning: "骑;旅程" },
+{ word: "walk", pronunciation: "", pos: "v.&n.", meaning: "步行" },
+{ word: "go hiking", pronunciation: "", pos: "ph-", meaning: "去远足" },
+{ word: "play sports", pronunciation: "", pos: "ph-", meaning: "做运动" },
+{ word: "tell jokes", pronunciation: "", pos: "ph-", meaning: "讲笑话" },
+{ word: "play basketball/football/volleyball", pronunciation: "", pos: "ph-", meaning: "打篮球/踢足球/打排球" },
+{ word: "join the tennis club", pronunciation: "", pos: "ph-", meaning: "加入网球俱乐部" },
+{ word: "play computer games", pronunciation: "", pos: "ph-", meaning: "玩电脑游戏" },
+{ word: "play chess", pronunciation: "", pos: "ph-", meaning: "下棋" },
+{ word: "fly a kite", pronunciation: "", pos: "ph-", meaning: "放风筝" },
+{ word: "watch TV", pronunciation: "", pos: "ph-", meaning: "看电视" },
+{ word: "take photos/pictures", pronunciation: "", pos: "ph-", meaning: "拍照" },
+{ word: "watch short videos", pronunciation: "", pos: "ph-", meaning: "看短视频" },
+{ word: "go online", pronunciation: "", pos: "ph-", meaning: "上网" },
+{ word: "make friends", pronunciation: "", pos: "ph-", meaning: "交友" },
+{ word: "climb mountains", pronunciation: "", pos: "ph-", meaning: "爬山" },
+
+// 4. 兴趣描述和感受
+{ word: "interesting/fun", pronunciation: "", pos: "adj.", meaning: "有趣的" },
+{ word: "valuable", pronunciation: "", pos: "adj.", meaning: "有价值的" },
+{ word: "important", pronunciation: "", pos: "adj.", meaning: "重要的" },
+{ word: "exciting", pronunciation: "", pos: "adj.", meaning: "令人激动的" },
+{ word: "relaxing", pronunciation: "", pos: "adj.", meaning: "令人放松的" },
+{ word: "useful", pronunciation: "", pos: "adj.", meaning: "有用的;有益的" },
+{ word: "boring", pronunciation: "", pos: "adj.", meaning: "令人无聊的" },
+{ word: "smooth", pronunciation: "", pos: "adj.", meaning: "悦耳的;平滑的" },
+{ word: "difficult/hard", pronunciation: "", pos: "adj.", meaning: "困难的" },
+{ word: "necessary", pronunciation: "", pos: "adj.", meaning: "必要的" },
+{ word: "wonderful", pronunciation: "", pos: "adj.", meaning: "精彩的" },
+{ word: "famous", pronunciation: "", pos: "adj.", meaning: "著名的" },
+{ word: "educational", pronunciation: "", pos: "adj.", meaning: "有教育意义的" },
+{ word: "enjoyable", pronunciation: "", pos: "adj.", meaning: "令人愉快的" },
+{ word: "meaningful", pronunciation: "", pos: "adj.", meaning: "有意义的" },
+{ word: "perfect", pronunciation: "", pos: "adj.", meaning: "完美的" },
+{ word: "special", pronunciation: "", pos: "adj.", meaning: "特别的;专门的" },
+{ word: "same", pronunciation: "", pos: "adj.", meaning: "同样的" },
+{ word: "cool", pronunciation: "", pos: "adj.", meaning: "妙极的;酷的" },
+{ word: "down", pronunciation: "", pos: "adj.", meaning: "沮丧的" },
+{ word: "easy/simple", pronunciation: "", pos: "adj.", meaning: "容易的;简单的" },
+{ word: "spare", pronunciation: "", pos: "adj.&v.", meaning: "空闲的;抽出(时间)" },
+{ word: "different", pronunciation: "", pos: "adj.", meaning: "不同的;有差异的" },
+{ word: "popular/welcome", pronunciation: "", pos: "adj.", meaning: "受欢迎的" },
+{ word: "painful", pronunciation: "", pos: "adj.", meaning: "令人痛苦的" },
+{ word: "pity", pronunciation: "", pos: "n.&v.", meaning: "遗憾;怜悯" },
+{ word: "silent", pronunciation: "", pos: "adj.", meaning: "无声的;不说话的" },
+{ word: "comfortable", pronunciation: "", pos: "adj.", meaning: "舒服的" },
+{ word: "proud", pronunciation: "", pos: "adj.", meaning: "自豪的" },
+{ word: "energetic", pronunciation: "", pos: "adj.", meaning: "精力充沛的" },
+{ word: "confident", pronunciation: "", pos: "adj.", meaning: "自信的" },
+{ word: "lucky", pronunciation: "", pos: "adj.", meaning: "幸运的" },
+{ word: "surprised/amazed", pronunciation: "", pos: "adj.", meaning: "惊讶的" },
+{ word: "hopeful", pronunciation: "", pos: "adj.", meaning: "有希望的" },
+{ word: "sad/upset", pronunciation: "", pos: "adj.", meaning: "难过的" },
+{ word: "happy/glad/joyful", pronunciation: "", pos: "adj.", meaning: "开心的;愉快的" },
+{ word: "China's national treasures", pronunciation: "", pos: "ph-", meaning: "中国的民族瑰宝" },
+{ word: "a strong sense of sadness and pain", pronunciation: "", pos: "ph-", meaning: "一种强烈的悲伤和痛苦" },
+        ];
+        // ==================== 题库数据结束 ====================
+        
+        // 应用状态
+        let currentMode = 'zhToEn'; // 'zhToEn' 或 'enToZh'
+        let displayMode = 'random'; // 'random' 或 'all'，随机显示20个或显示全部
+        let displayedWords = [];
+        let speechSupported = false;
+        let speechRate = 1.0;
+        let speechAccent = 'en-US';
+        
+        // DOM 元素
+        const wordContainer = document.getElementById('wordContainer');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const revealBtn = document.getElementById('revealBtn');
+        const hideBtn = document.getElementById('hideBtn');
+        const modeBtn = document.getElementById('modeBtn');
+        const displayModeBtn = document.getElementById('displayModeBtn');
+        const currentModeSpan = document.getElementById('currentMode');
+        const displayModeSpan = document.getElementById('displayMode');
+        const totalWordsSpan = document.getElementById('totalWords');
+        const displayCountSpan = document.getElementById('displayCount');
+        const revealedCountSpan = document.getElementById('revealedCount');
+        const speechRateSelect = document.getElementById('speechRate');
+        const speechAccentSelect = document.getElementById('speechAccent');
+        const speechSupportSpan = document.getElementById('speechSupport');
+        
+        // 检查浏览器是否支持语音合成
+        function checkSpeechSupport() {
+            if ('speechSynthesis' in window) {
+                speechSupported = true;
+                speechSupportSpan.innerHTML = '<i class="fas fa-check-circle" style="color: #27ae60;"></i> 浏览器支持语音合成功能';
+            } else {
+                speechSupported = false;
+                speechSupportSpan.innerHTML = '<i class="fas fa-exclamation-triangle" style="color: #e74c3c;"></i> 您的浏览器不支持语音合成功能，无法使用发音';
+            }
+        }
+        
+        // 发音函数
+        function speakWord(text) {
+            if (!speechSupported) {
+                alert('您的浏览器不支持语音合成功能，请使用Chrome、Edge或Safari浏览器');
+                return;
+            }
+            
+            // 停止当前正在播放的语音
+            window.speechSynthesis.cancel();
+            
+            // 创建语音合成实例
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = speechRate;
+            utterance.lang = speechAccent;
+            utterance.volume = 1;
+            
+            // 播放语音
+            window.speechSynthesis.speak(utterance);
+            
+            return utterance;
+        }
+        
+        // 初始化
+        function init() {
+            checkSpeechSupport();
+            totalWordsSpan.textContent = wordList.length;
+            
+            // 初始化显示模式
+            updateDisplayMode();
+            
+            // 设置语音参数变化监听
+            speechRateSelect.addEventListener('change', function() {
+                speechRate = parseFloat(this.value);
+            });
+            
+            speechAccentSelect.addEventListener('change', function() {
+                speechAccent = this.value;
+            });
+        }
+        
+        // 更新显示模式
+        function updateDisplayMode() {
+            if (displayMode === 'random') {
+                // 随机模式：选择最多20个单词
+                shuffleWords();
+                displayModeSpan.textContent = '随机20个';
+                displayModeBtn.innerHTML = '<i class="fas fa-list"></i> 显示全部单词';
+            } else {
+                // 全部模式：显示所有单词
+                displayAllWords();
+                displayModeSpan.textContent = '全部单词';
+                displayModeBtn.innerHTML = '<i class="fas fa-random"></i> 随机20个';
+            }
+        }
+        
+        // 切换显示模式
+        function toggleDisplayMode() {
+            displayMode = displayMode === 'random' ? 'all' : 'random';
+            updateDisplayMode();
+        }
+        
+        // 随机洗牌并选择要显示的单词
+        function shuffleWords() {
+            // 复制单词列表
+            const shuffled = [...wordList];
+            
+            // Fisher-Yates 洗牌算法
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            
+            // 选择最多20个单词，并为每个单词添加是否显示答案的状态
+            displayedWords = shuffled.slice(0, Math.min(20, shuffled.length)).map(word => ({
+                ...word,
+                revealed: false
+            }));
+            
+            updateDisplay();
+        }
+        
+        // 显示所有单词
+        function displayAllWords() {
+            // 复制所有单词，并为每个单词添加是否显示答案的状态
+            displayedWords = wordList.map(word => ({
+                ...word,
+                revealed: false
+            }));
+            
+            updateDisplay();
+        }
+        
+        // 显示所有答案
+        function revealAllAnswers() {
+            displayedWords.forEach(word => {
+                word.revealed = true;
+            });
+            updateDisplay();
+        }
+        
+        // 隐藏所有答案
+        function hideAllAnswers() {
+            displayedWords.forEach(word => {
+                word.revealed = false;
+            });
+            updateDisplay();
+        }
+        
+        // 切换单个单词的答案显示状态
+        function toggleWordAnswer(index) {
+            if (index >= 0 && index < displayedWords.length) {
+                displayedWords[index].revealed = !displayedWords[index].revealed;
+                updateDisplay();
+            }
+        }
+        
+        // 切换检测模式
+        function toggleMode() {
+            currentMode = currentMode === 'zhToEn' ? 'enToZh' : 'zhToEn';
+            // 切换模式时隐藏所有答案
+            hideAllAnswers();
+        }
+        
+        // 更新显示
+        function updateDisplay() {
+            // 更新模式指示器
+            currentModeSpan.textContent = currentMode === 'zhToEn' ? '中译英模式' : '英译中模式';
+            
+            // 更新显示单词数量
+            displayCountSpan.textContent = displayedWords.length;
+            
+            // 计算已揭示答案的数量
+            const revealedCount = displayedWords.filter(word => word.revealed).length;
+            revealedCountSpan.textContent = revealedCount;
+            
+            // 清空容器
+            wordContainer.innerHTML = '';
+            
+            // 生成单词卡片
+            displayedWords.forEach((wordObj, index) => {
+                const card = document.createElement('div');
+                card.className = `word-card ${wordObj.revealed ? 'revealed' : ''}`;
+                card.dataset.index = index;
+                
+                // 添加点击事件
+                card.addEventListener('click', () => toggleWordAnswer(index));
+                
+                // 创建右上角容器（包含序号和发音按钮）
+                const cardHeader = document.createElement('div');
+                cardHeader.className = 'card-header';
+                
+                // 添加发音按钮
+                if (speechSupported) {
+                    const pronunciationBtn = document.createElement('button');
+                    pronunciationBtn.className = 'pronunciation-btn';
+                    pronunciationBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    pronunciationBtn.title = '点击发音';
+                    pronunciationBtn.addEventListener('click', (e) => {
+                        e.stopPropagation(); // 阻止事件冒泡，避免触发卡片点击事件
+                        
+                        // 添加播放动画
+                        pronunciationBtn.classList.add('playing');
+                        
+                        // 播放单词发音
+                        const utterance = speakWord(wordObj.word);
+                        
+                        // 播放结束后移除动画
+                        if (utterance) {
+                            utterance.onend = () => {
+                                pronunciationBtn.classList.remove('playing');
+                            };
+                        } else {
+                            // 如果utterance不存在，延迟移除动画
+                            setTimeout(() => {
+                                pronunciationBtn.classList.remove('playing');
+                            }, 1000);
+                        }
+                    });
+                    cardHeader.appendChild(pronunciationBtn);
+                }
+                
+                // 添加序号
+                const number = document.createElement('div');
+                number.className = 'card-number';
+                number.textContent = index + 1;
+                cardHeader.appendChild(number);
+                
+                card.appendChild(cardHeader);
+                
+                // 添加提示文本
+                const hint = document.createElement('div');
+                hint.className = 'card-hint';
+                hint.textContent = '点击显示答案';
+                card.appendChild(hint);
+                
+                // 问题部分
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                // 答案部分
+                const answerDiv = document.createElement('div');
+                answerDiv.className = `answer ${wordObj.revealed ? 'revealed' : 'hidden'}`;
+                
+                if (currentMode === 'zhToEn') {
+                    // 中译英模式：显示词性和中文，答案显示英文单词
+                    questionDiv.innerHTML = `<strong>${wordObj.pos}</strong> ${wordObj.meaning}`;
+                    answerDiv.innerHTML = wordObj.revealed ? 
+                        `${wordObj.word} ${wordObj.pronunciation ? `<span class="pronunciation">${wordObj.pronunciation}</span>` : ''}` : 
+                        '点击显示英文单词';
+                } else {
+                    // 英译中模式：显示英文单词，答案显示词性和中文
+                    questionDiv.innerHTML = `${wordObj.word} ${wordObj.pronunciation ? `<span class="pronunciation">${wordObj.pronunciation}</span>` : ''}`;
+                    answerDiv.innerHTML = wordObj.revealed ? 
+                        `<strong>${wordObj.pos}</strong> ${wordObj.meaning}` : 
+                        '点击显示中文释义';
+                }
+                
+                card.appendChild(questionDiv);
+                card.appendChild(answerDiv);
+                wordContainer.appendChild(card);
+            });
+        }
+        
+        // 事件监听
+        shuffleBtn.addEventListener('click', () => {
+            if (displayMode === 'random') {
+                shuffleWords();
+            } else {
+                // 在全部模式下，洗牌会打乱所有单词的顺序
+                const shuffled = [...displayedWords];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                displayedWords = shuffled;
+                updateDisplay();
+            }
+        });
+        
+        revealBtn.addEventListener('click', revealAllAnswers);
+        hideBtn.addEventListener('click', hideAllAnswers);
+        modeBtn.addEventListener('click', toggleMode);
+        displayModeBtn.addEventListener('click', toggleDisplayMode);
+        
+        // 初始化应用
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
