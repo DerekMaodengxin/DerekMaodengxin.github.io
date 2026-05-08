@@ -527,7 +527,8 @@
                 font-size: 1.8rem;
             }
         }
-/* 隐藏使用说明区块 */
-.instructions {
-    display: none;
-}
+
+            .instructions {
+                display: none;
+            }
+        }
