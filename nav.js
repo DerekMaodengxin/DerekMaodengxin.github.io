@@ -42,13 +42,23 @@ document.addEventListener('DOMContentLoaded', function() {
             <details class="dropdown">
                 <summary>📝 短语专题</summary>
                 <div class="dropdown-menu">
-                    <a href="phrases-topic1-3.html" class="${currentPage === 'phrases-topic1-3.html' ? 'active' : ''}">🔤 话题1-3短语</a>
-                    <a href="phrases-topic4-6.html" class="${currentPage === 'phrases-topic4-6.html' ? 'active' : ''}">🔤 话题4-6短语</a>
-                    <a href="phrases-topic7-9.html" class="${currentPage === 'phrases-topic7-9.html' ? 'active' : ''}">🔤 话题7-9短语</a>
+                    <a href="phrases-topic1.html" class="${currentPage === 'phrases-topic1-3.html' ? 'active' : ''}">🔤 话题1短语</a>
+                    <a href="phrases-topic2.html" class="${currentPage === 'phrases-topic4-6.html' ? 'active' : ''}">🔤 话题2短语</a>
+                    <a href="phrases-topic3.html" class="${currentPage === 'phrases-topic7-9.html' ? 'active' : ''}">🔤 话题3短语</a>
                     <a href="phrases-verb.html" class="${currentPage === 'phrases-verb.html' ? 'active' : ''}">🔤 动词短语</a>
                     <a href="phrases-prep.html" class="${currentPage === 'phrases-prep.html' ? 'active' : ''}">📍 介词短语</a>
                     <a href="phrases-noun.html" class="${currentPage === 'phrases-noun.html' ? 'active' : ''}">📦 名词短语</a>
                     <a href="phrases-adj.html" class="${currentPage === 'phrases-adj.html' ? 'active' : ''}">🎨 形容词短语</a>
+            </div>
+        </details>
+        
+                     <!-- 新增句子专题下拉菜单 -->
+            <details class="dropdown">
+                <summary>📝 句子专题</summary>
+                <div class="dropdown-menu">
+                    <a href="sentences-topic1.html" class="${currentPage === 'phrases-topic1-3.html' ? 'active' : ''}">🔤 话题1句子</a>
+                    <a href="sentences-topic2.html" class="${currentPage === 'phrases-topic4-6.html' ? 'active' : ''}">🔤 话题2句子</a>
+                    <a href="sentences-topic3.html" class="${currentPage === 'phrases-topic7-9.html' ? 'active' : ''}">🔤 话题3句子</a>                   
             </div>
         </details>
         </nav>
