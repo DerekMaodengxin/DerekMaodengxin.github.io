@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </details>
 
             <details class="dropdown" ${currentPage.startsWith('morphology') ? 'open' : ''}>
-                <summary>📐 词形变化（话题1-25）</summary>
+                <summary>♻️ 词形变化（话题1-25）</summary>
                 <div class="dropdown-menu">
                     <a href="morphology-topic1.html" class="${currentPage === 'morphology-topic1.html' ? 'active' : ''}">✒️ 话题1</a>
                     <a href="morphology-topic2.html" class="${currentPage === 'morphology-topic2.html' ? 'active' : ''}">✒️ 话题2</a>
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </details>
 
             <details class="dropdown" ${currentPage.startsWith('phrases') ? 'open' : ''}>
-                <summary>📝 单词和短语专题</summary>
+                <summary>🔖 单词和短语专题</summary>
                 <div class="dropdown-menu">
                     <a href="wordsandphrases-topic1.html" class="${currentPage === 'wordsandphrases-topic1.html' ? 'active' : ''}">🏷️ 话题 1</a>
                     <a href="wordsandphrases-topic2.html" class="${currentPage === 'wordsandphrases-topic2.html' ? 'active' : ''}">🏷️ 话题 2</a>
