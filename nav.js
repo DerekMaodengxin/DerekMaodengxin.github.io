@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </details>
 
             <details class="dropdown" ${currentPage.startsWith('phrases') ? 'open' : ''}>
-                <summary>📝 短语专题</summary>
+                <summary>📝 单词和短语专题</summary>
                 <div class="dropdown-menu">
                     <a href="wordsandphrases-topic1.html" class="${currentPage === 'wordsandphrases-topic1.html' ? 'active' : ''}">🔤 单词和短语 - 话题 1</a>
                     <a href="wordsandphrases-topic2.html" class="${currentPage === 'wordsandphrases-topic2.html' ? 'active' : ''}">🔤 单词和短语 - 话题 2</a>
