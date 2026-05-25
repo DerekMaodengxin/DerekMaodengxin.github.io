@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const pageTitles = {
         'index.html': '🏠 首页 - 🧬不规则动词',
         'nonfinite-verbs.html': '🧩 非谓语动词搭配专题',
+        'flashcards.html': '🃏 抽认卡',
         'verbs1-40.html': '⚡ 动词列表 1-40',
         'verbs41-80.html': '⚡ 动词列表 41-80',
         'verbs81-130.html': '⚡ 动词列表 81-130',
@@ -83,7 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <nav class="site-nav">
             <a href="index.html" class="${currentPage === 'index.html' ? 'active' : ''}">🏠 首页-不规则动词</a>
             <a href="nonfinite-verbs.html" class="${currentPage === 'nonfinite-verbs.html' ? 'active' : ''}">🧩 非谓语动词搭配</a>
-            
+            <a href="flashcards.html" class="${currentPage === 'flashcards.html' ? 'active' : ''}">🃏 抽认卡</a>
+                       
             <details class="dropdown" ${currentPage.startsWith('verbs') ? 'open' : ''}>
                 <summary>📚 动词列表（1-416） </summary>
                 <div class="dropdown-menu">
