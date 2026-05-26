@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>英语中考词汇闪卡 - 可展开总结版</title>
+    <title>英语中考词汇闪卡 - 最终版</title>
     <style>
         * {
             margin: 0;
@@ -240,6 +240,7 @@
             height: 400px;
             margin: 0;
             touch-action: pan-y pinch-zoom;
+            position: relative;
         }
         .card {
             width: 100%;
@@ -248,6 +249,36 @@
             transform-style: preserve-3d;
             transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             cursor: pointer;
+            will-change: transform;
+        }
+        /* 卡片切换动画类 */
+        .card-slide-out-left {
+            animation: slideOutLeft 0.2s ease forwards;
+        }
+        .card-slide-out-right {
+            animation: slideOutRight 0.2s ease forwards;
+        }
+        .card-slide-in-left {
+            animation: slideInLeft 0.2s ease forwards;
+        }
+        .card-slide-in-right {
+            animation: slideInRight 0.2s ease forwards;
+        }
+        @keyframes slideOutLeft {
+            from { transform: translateX(0) rotateY(0deg); opacity: 1; }
+            to { transform: translateX(-100%) rotateY(0deg); opacity: 0; }
+        }
+        @keyframes slideOutRight {
+            from { transform: translateX(0) rotateY(0deg); opacity: 1; }
+            to { transform: translateX(100%) rotateY(0deg); opacity: 0; }
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%) rotateY(0deg); opacity: 0; }
+            to { transform: translateX(0) rotateY(0deg); opacity: 1; }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%) rotateY(0deg); opacity: 0; }
+            to { transform: translateX(0) rotateY(0deg); opacity: 1; }
         }
         .card.is-flipped {
             transform: rotateY(180deg);
@@ -410,7 +441,7 @@
         
         /* ========== 移动端专用样式 ========== */
         @media (max-width: 768px) {
-            /* 1. 头部一行布局，缩小元素，话题下拉框拉长 */
+            /* 头部一行布局，缩小元素，话题下拉框拉长 */
             .header {
                 flex-wrap: nowrap;
                 padding: 6px 12px;
@@ -428,7 +459,7 @@
             .bank-select {
                 padding: 4px 8px;
                 font-size: 0.6rem;
-                max-width: 130px;   /* 拉长显示完整话题名称 */
+                max-width: 130px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -444,7 +475,7 @@
                 display: none;
             }
 
-            /* 2. 进度栏改为两行布局，恢复文字标签，图标正常显示 */
+            /* 进度栏改为两行布局，恢复文字标签 */
             .stats-panel {
                 padding: 8px 12px;
             }
@@ -465,11 +496,9 @@
                 align-items: center;
                 gap: 4px;
             }
-            /* 确保文字标签显示 */
             .progress-label, .score-label, .skipped-label {
                 display: inline !important;
             }
-            /* 第二行：右侧三个按钮移到左侧，并排显示 */
             .stats-right {
                 display: flex;
                 justify-content: space-between;
@@ -484,7 +513,6 @@
                 flex: 1;
                 text-align: center;
             }
-            /* 状态栏放宽，允许较长文本（如“❌ 未掌握 (回顾中)”） */
             .status-badge {
                 white-space: normal;
                 word-break: keep-all;
@@ -492,7 +520,7 @@
                 flex: 1.5;
             }
 
-            /* 3. 卡片高度压缩，按钮上移 */
+            /* 卡片高度压缩，按钮上移 */
             .card-container {
                 height: 340px;
             }
@@ -501,12 +529,12 @@
                 margin-bottom: 6px;
             }
 
-            /* 4. 删除滑动提示 */
+            /* 删除滑动提示 */
             .swipe-hint {
                 display: none;
             }
 
-            /* 5. 底部说明移动端专用 */
+            /* 底部说明移动端专用 */
             footer {
                 display: none;
             }
@@ -518,7 +546,7 @@
                 color: #6C757D;
             }
 
-            /* 6. 随机点名挑战在移动端正确隐藏 */
+            /* 随机点名挑战在移动端正确隐藏 */
             .random-card {
                 display: none;
             }
@@ -560,7 +588,6 @@
                 width: 20px;
                 height: 20px;
             }
-            /* 确保游戏内无滚动条 */
             .game-inner {
                 height: 100%;
                 justify-content: space-between;
@@ -736,7 +763,7 @@
                     <div class="card-container" id="card-container">
                         <div class="card" id="flashcard" onclick="flipCard()">
                             <div class="card-face card-front">
-                                <div class="front-icon">✨ WORD</div>
+                                <div class="front-icon">📖 TERM</div>  <!-- 原 "✨ WORD" 改为 "📖 TERM" -->
                                 <h2 id="word-display">Ready?</h2>
                                 <div id="pronunciation-front" class="pronunciation"></div>
                                 <button id="audio-btn" class="audio-icon-btn" onclick="event.stopPropagation(); playCurrentAudio()">
@@ -765,7 +792,6 @@
                     </div>
                     <button id="next-skip-btn" class="nav-arrow" onclick="nextOrSkip()">▶</button>
                 </div>
-                <!-- 移动端删除滑动提示，PC端仍隐藏（通过CSS） -->
                 <div class="swipe-hint">👆 左右滑动屏幕可以快速评判单词</div>
 
                 <div class="action-btns" id="action-btns" style="display: none;">
@@ -1256,8 +1282,18 @@
         if(!gameState.isPlaying) return;
         let newIndex = gameState.currentIndex - 1;
         if(newIndex < 0) return;
-        gameState.currentIndex = newIndex;
-        showCurrentWord();
+        // 添加滑动动画
+        const card = document.getElementById('flashcard');
+        card.classList.add('card-slide-out-right');
+        setTimeout(() => {
+            gameState.currentIndex = newIndex;
+            showCurrentWord();
+            card.classList.remove('card-slide-out-right');
+            card.classList.add('card-slide-in-left');
+            setTimeout(() => {
+                card.classList.remove('card-slide-in-left');
+            }, 200);
+        }, 150);
         if(randomEnabled) refreshRandomStudent();
     }
     
@@ -1269,8 +1305,18 @@
         } else {
             let newIndex = gameState.currentIndex + 1;
             if(newIndex >= gameState.sessionWords.length) return;
-            gameState.currentIndex = newIndex;
-            showCurrentWord();
+            // 添加滑动动画
+            const card = document.getElementById('flashcard');
+            card.classList.add('card-slide-out-left');
+            setTimeout(() => {
+                gameState.currentIndex = newIndex;
+                showCurrentWord();
+                card.classList.remove('card-slide-out-left');
+                card.classList.add('card-slide-in-right');
+                setTimeout(() => {
+                    card.classList.remove('card-slide-in-right');
+                }, 200);
+            }, 150);
             if(randomEnabled) refreshRandomStudent();
         }
     }
@@ -1285,6 +1331,7 @@
             }
         }
         if(pendingIndex !== -1 && pendingIndex !== gameState.currentIndex){
+            // 直接跳转，不加动画（或简单淡入淡出）
             gameState.currentIndex = pendingIndex;
             showCurrentWord();
             if(randomEnabled) refreshRandomStudent();
