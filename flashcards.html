@@ -398,7 +398,7 @@
             opacity: 0.4;
             pointer-events: none;
         }
-        /* 随机点名 - 桌面端显示，移动端隐藏 */
+        /* 随机点名 - 移动端隐藏 */
         .random-card {
             background: white;
             border-radius: 32px;
@@ -407,9 +407,10 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             flex-shrink: 0;
         }
-        /* 移动端专用样式 - 仅覆盖移动端，PC端不受影响 */
+        
+        /* ========== 移动端专用样式 ========== */
         @media (max-width: 768px) {
-            /* 1. 头部紧凑一行 */
+            /* 1. 头部一行布局，缩小元素，话题下拉框拉长 */
             .header {
                 flex-wrap: nowrap;
                 padding: 6px 12px;
@@ -424,15 +425,13 @@
                 font-size: 1rem;
                 white-space: nowrap;
             }
-            /* 话题下拉列表拉长，显示完整文字 */
             .bank-select {
                 padding: 4px 8px;
-                font-size: 0.7rem;
-                max-width: 130px;
-                white-space: normal;
-                overflow: visible;
-                text-overflow: clip;
-                width: auto;
+                font-size: 0.6rem;
+                max-width: 130px;   /* 拉长显示完整话题名称 */
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .action-buttons {
                 gap: 4px;
@@ -444,27 +443,56 @@
             .home-btn span, .nav-btn span {
                 display: none;
             }
-            /* 2. 进度栏：隐藏文字标签，保留图标+数字 */
-            .stats-left .progress-label,
-            .stats-left .score-label,
-            .stats-left .skipped-label {
-                display: none;
+
+            /* 2. 进度栏改为两行布局，恢复文字标签，图标正常显示 */
+            .stats-panel {
+                padding: 8px 12px;
+            }
+            .stats-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
             }
             .stats-left {
-                gap: 12px;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                gap: 8px;
             }
             .stats-left span {
                 font-size: 0.7rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
             }
-            /* 3. 隐藏计时器 */
-            .stats-right .timer-display {
-                display: none;
+            /* 确保文字标签显示 */
+            .progress-label, .score-label, .skipped-label {
+                display: inline !important;
             }
-            /* 4. 随机点名模块完全隐藏 */
-            .random-card {
-                display: none;
+            /* 第二行：右侧三个按钮移到左侧，并排显示 */
+            .stats-right {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                gap: 8px;
+                flex-wrap: nowrap;
             }
-            /* 其他移动端调整 */
+            .timer-display, .status-badge, .back-to-current-btn {
+                padding: 4px 8px;
+                font-size: 0.6rem;
+                white-space: nowrap;
+                flex: 1;
+                text-align: center;
+            }
+            /* 状态栏放宽，允许较长文本（如“❌ 未掌握 (回顾中)”） */
+            .status-badge {
+                white-space: normal;
+                word-break: keep-all;
+                line-height: 1.2;
+                flex: 1.5;
+            }
+
+            /* 3. 卡片高度压缩，按钮上移 */
             .card-container {
                 height: 340px;
             }
@@ -472,7 +500,14 @@
                 margin-top: 0;
                 margin-bottom: 6px;
             }
+
+            /* 4. 删除滑动提示 */
             .swipe-hint {
+                display: none;
+            }
+
+            /* 5. 底部说明移动端专用 */
+            footer {
                 display: none;
             }
             .mobile-footer {
@@ -482,9 +517,13 @@
                 font-size: 0.6rem;
                 color: #6C757D;
             }
-            footer {
+
+            /* 6. 随机点名挑战在移动端正确隐藏 */
+            .random-card {
                 display: none;
             }
+
+            /* 其他微调 */
             .nav-arrow {
                 width: 44px;
                 height: 44px;
@@ -520,6 +559,11 @@
             .audio-icon-btn svg {
                 width: 20px;
                 height: 20px;
+            }
+            /* 确保游戏内无滚动条 */
+            .game-inner {
+                height: 100%;
+                justify-content: space-between;
             }
         }
         /* PC端隐藏移动端专用元素 */
@@ -721,6 +765,7 @@
                     </div>
                     <button id="next-skip-btn" class="nav-arrow" onclick="nextOrSkip()">▶</button>
                 </div>
+                <!-- 移动端删除滑动提示，PC端仍隐藏（通过CSS） -->
                 <div class="swipe-hint">👆 左右滑动屏幕可以快速评判单词</div>
 
                 <div class="action-btns" id="action-btns" style="display: none;">
