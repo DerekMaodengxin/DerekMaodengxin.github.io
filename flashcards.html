@@ -407,53 +407,106 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             flex-shrink: 0;
         }
+        /* 移动端专用样式 - 仅覆盖移动端 */
         @media (max-width: 768px) {
-            .random-card {
+            /* 1. 头部一行布局，缩小元素 */
+            .header {
+                flex-wrap: nowrap;
+                padding: 6px 12px;
+                gap: 6px;
+            }
+            .logo-area {
+                gap: 6px;
+                flex-shrink: 1;
+                min-width: 0;
+            }
+            h1 {
+                font-size: 1rem;
+                white-space: nowrap;
+            }
+            .bank-select {
+                padding: 4px 8px;
+                font-size: 0.6rem;
+                max-width: 90px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .action-buttons {
+                gap: 4px;
+            }
+            .home-btn, .nav-btn {
+                padding: 4px 8px;
+                font-size: 1rem;
+            }
+            .home-btn span, .nav-btn span {
                 display: none;
             }
+            /* 2. 进度栏：隐藏文字标签，只保留图标+数字 */
+            .stats-left .progress-label,
+            .stats-left .score-label,
+            .stats-left .skipped-label {
+                display: none;
+            }
+            .stats-left {
+                gap: 12px;
+            }
+            .stats-left span {
+                font-size: 0.7rem;
+            }
+            /* 整合进度栏为一行 */
+            .stats-row {
+                flex-wrap: nowrap;
+                gap: 4px;
+            }
+            .stats-right {
+                gap: 4px;
+            }
+            .timer-display, .status-badge, .back-to-current-btn {
+                padding: 4px 8px;
+                font-size: 0.6rem;
+            }
+            /* 3. 卡片高度压缩，按钮上移 */
             .card-container {
-                height: 360px;
+                height: 340px;
             }
-            #word-display {
-                font-size: 2rem;
+            .action-btns {
+                margin-top: 0;
+                margin-bottom: 6px;
             }
-            .meaning-text {
-                font-size: 1.1rem;
+            /* 4. 删除滑动提示 */
+            .swipe-hint {
+                display: none;
             }
+            /* 5. 底部说明移动端专用 */
+            footer {
+                display: none;
+            }
+            .mobile-footer {
+                display: block;
+                text-align: center;
+                margin-top: 6px;
+                font-size: 0.6rem;
+                color: #6C757D;
+            }
+            /* 其他微调 */
             .nav-arrow {
                 width: 44px;
                 height: 44px;
                 font-size: 1.5rem;
             }
             .action-btn {
-                padding: 8px 20px;
-                font-size: 0.9rem;
+                padding: 6px 16px;
+                font-size: 0.85rem;
             }
-            .stats-left {
-                gap: 12px;
+            .card-face {
+                padding: 1rem;
             }
-            /* 移动端导航栏只显示图标，隐藏文字 */
-            .nav-btn span, .home-btn span {
-                display: none;
+            #word-display {
+                font-size: 2rem;
             }
-            .home-btn, .nav-btn {
-                padding: 6px 12px;
-                font-size: 1.2rem;
-            }
-            /* 进度栏只保留图标+数字 */
-            .stats-left .progress-label,
-            .stats-left .score-label,
-            .stats-left .skipped-label {
-                display: none;
-            }
-            .timer-display, .status-badge, .back-to-current-btn {
-                padding: 4px 10px;
-                font-size: 0.65rem;
-            }
-        }
-        @media (max-width: 480px) {
-            .card-container {
-                height: 340px;
+            .meaning-text {
+                font-size: 1rem;
             }
             .back-word {
                 font-size: 1.4rem;
@@ -461,12 +514,93 @@
             .example-text {
                 font-size: 0.85rem;
             }
+            .pronunciation {
+                font-size: 0.7rem;
+                padding: 2px 10px;
+            }
+            .audio-icon-btn {
+                width: 36px;
+                height: 36px;
+            }
+            .audio-icon-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+            /* 确保游戏内无滚动条（内容完全在一屏） */
+            .game-inner {
+                height: 100%;
+                justify-content: space-between;
+            }
         }
-        .flex-between {
+        /* PC端隐藏移动端专用元素 */
+        .mobile-footer {
+            display: none;
+        }
+        @media (min-width: 769px) {
+            .swipe-hint {
+                display: none;
+            }
+        }
+
+        /* 总结弹窗中的可折叠单词卡片样式 */
+        .mistake-item {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .mistake-summary {
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: baseline;
+            cursor: pointer;
+            background: #F8FAFC;
+            transition: background 0.2s;
         }
+        .mistake-summary:hover {
+            background: #EEF2FF;
+        }
+        .word-status {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .status-badge-small {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 30px;
+            background: #FEE2E2;
+            color: #B91C1C;
+        }
+        .status-badge-small.skipped {
+            background: #FFF3E0;
+            color: #B45309;
+        }
+        .mistake-detail {
+            padding: 12px 16px;
+            border-top: 1px solid #E2E8F0;
+            background: white;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .mistake-detail p {
+            margin: 6px 0;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #4B5563;
+            margin-right: 8px;
+        }
+        .hidden { display: none; }
+        .word-item {
+            background: #F8FAFE;
+            border-radius: 20px;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .highlight-word { background-color: #FEF08A; font-weight: bold; border-radius: 4px; padding: 0 2px; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
         .toggle-switch {
             position: relative;
             display: inline-block;
@@ -524,76 +658,6 @@
             font-size: 0.7rem;
             color: #6C757D;
             flex-shrink: 0;
-        }
-        .hidden { display: none; }
-        .word-item {
-            background: #F8FAFE;
-            border-radius: 20px;
-            padding: 0.8rem;
-            margin-bottom: 0.8rem;
-        }
-        .highlight-word { background-color: #FEF08A; font-weight: bold; border-radius: 4px; padding: 0 2px; }
-        .swipe-hint {
-            text-align: center;
-            font-size: 0.7rem;
-            color: #8b8f9c;
-            margin: 4px 0;
-        }
-        @media (min-width: 769px) {
-            .swipe-hint {
-                display: none;
-            }
-        }
-
-        /* 总结弹窗中的可折叠单词卡片样式 */
-        .mistake-item {
-            background: white;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .mistake-summary {
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            cursor: pointer;
-            background: #F8FAFC;
-            transition: background 0.2s;
-        }
-        .mistake-summary:hover {
-            background: #EEF2FF;
-        }
-        .word-status {
-            font-weight: bold;
-            font-size: 1rem;
-        }
-        .status-badge-small {
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 30px;
-            background: #FEE2E2;
-            color: #B91C1C;
-        }
-        .status-badge-small.skipped {
-            background: #FFF3E0;
-            color: #B45309;
-        }
-        .mistake-detail {
-            padding: 12px 16px;
-            border-top: 1px solid #E2E8F0;
-            background: white;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-        .mistake-detail p {
-            margin: 6px 0;
-        }
-        .detail-label {
-            font-weight: 600;
-            color: #4B5563;
-            margin-right: 8px;
         }
     </style>
 </head>
@@ -667,6 +731,7 @@
                     </div>
                     <button id="next-skip-btn" class="nav-arrow" onclick="nextOrSkip()">▶</button>
                 </div>
+                <!-- 移动端删除滑动提示，PC端仍隐藏（通过CSS） -->
                 <div class="swipe-hint">👆 左右滑动屏幕可以快速评判单词</div>
 
                 <div class="action-btns" id="action-btns" style="display: none;">
@@ -693,6 +758,7 @@
                     </div>
                 </div>
                 <footer>✨ 左右箭头回顾/跳过 | 左右方向键评判 | 空格/上下翻转卡片</footer>
+                <div class="mobile-footer">👈 左右滑动评判 | 点击卡片翻转 | 箭头切换单词</div>
             </div>
         </section>
 
@@ -1221,7 +1287,6 @@
             if(w.status === 'wrong' || w.status === 'skipped'){
                 let studentName = '优秀的你';
                 if(w.status === 'wrong'){
-                    // 从 wrongRecords 中找到对应的学生名（可能有多个学生错同一个词，这里简化：取第一个匹配的学生）
                     let record = gameState.wrongRecords.find(r => r.word === w.word);
                     if(record) studentName = record.student;
                 }
@@ -1243,7 +1308,6 @@
         if(failedItems.length > 0){
             reportHtml = `<div style="margin-bottom: 12px;"><strong>📌 待复习单词列表（点击展开详情）</strong></div>`;
             for(let item of failedItems){
-                // 高亮例句中的单词
                 const highlightedExample = updateExampleDisplay(item.example, item.word, item.highlight);
                 const statusClass = item.status === '未掌握' ? '' : 'skipped';
                 reportHtml += `
