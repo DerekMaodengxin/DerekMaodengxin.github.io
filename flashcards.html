@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>英语中考词汇闪卡 - 最终版</title>
+    <title>英语中考词汇闪卡 - 可展开总结版</title>
     <style>
         * {
             margin: 0;
@@ -69,12 +69,13 @@
             color: #4338CA;
         }
 
-        .nav {
+        /* 统一按钮样式 */
+        .action-buttons {
             display: flex;
             gap: 12px;
+            align-items: center;
         }
-
-        .nav-btn {
+        .home-btn, .nav-btn {
             padding: 6px 20px;
             border-radius: 40px;
             font-weight: 600;
@@ -83,25 +84,23 @@
             cursor: pointer;
             border: none;
             font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #1F2937;
         }
-
+        .home-btn {
+            background: transparent;
+            color: #1F2937;
+        }
+        .home-btn:hover, .nav-btn:hover {
+            background: #E0E7FF;
+        }
         .nav-btn.active {
             background: #4F46E5;
             color: white;
             box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
-        }
-
-        .home-btn {
-            background: #4F46E5;
-            color: white;
-            border: none;
-            border-radius: 40px;
-            padding: 6px 18px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
         }
 
         .main-content {
@@ -147,28 +146,50 @@
             font-weight: 500;
             color: #1E293B;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 8px;
         }
         .stats-left {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             align-items: baseline;
             flex-wrap: wrap;
         }
+        .stats-left span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
         .stats-right {
             display: flex;
-            gap: 16px;
+            gap: 8px;
             align-items: center;
+            flex-wrap: nowrap;
         }
         .back-to-current-btn {
             background: #E0E7FF;
             border: none;
-            padding: 4px 16px;
+            padding: 6px 12px;
             border-radius: 40px;
             font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
             color: #4F46E5;
+            white-space: nowrap;
+        }
+        .timer-display, .status-badge {
+            background: #E2E8F0;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .status-badge {
+            background: #F59E0B20;
+            color: #B45309;
         }
         .progress-bar-bg {
             background: #E2E8F0;
@@ -182,21 +203,6 @@
             width: 0%;
             height: 100%;
             transition: width 0.2s ease;
-        }
-        .timer-display {
-            font-family: monospace;
-            font-size: 0.8rem;
-            background: #E2E8F0;
-            padding: 2px 10px;
-            border-radius: 40px;
-        }
-        .review-badge {
-            background: #F59E0B20;
-            color: #B45309;
-            font-size: 0.75rem;
-            padding: 2px 12px;
-            border-radius: 40px;
-            font-weight: 600;
         }
 
         .card-nav-container {
@@ -231,7 +237,7 @@
             perspective: 1200px;
             width: 100%;
             max-width: 640px;
-            height: 400px;  /* 压缩高度，使移动端按钮可见 */
+            height: 400px;
             margin: 0;
             touch-action: pan-y pinch-zoom;
         }
@@ -309,14 +315,12 @@
             transition: 0.2s;
             touch-action: manipulation;
         }
-        .audio-icon-btn:hover { background: #E0E7FF; transform: scale(1.05); }
         .audio-icon-btn svg {
             width: 28px;
             height: 28px;
             stroke: #4F46E5;
             fill: none;
         }
-        /* 移除点击卡片查看释义的提示 */
         .card-front p {
             display: none;
         }
@@ -394,7 +398,7 @@
             opacity: 0.4;
             pointer-events: none;
         }
-        /* 随机点名 - 移动端隐藏，桌面端显示 */
+        /* 随机点名 - 移动端隐藏 */
         .random-card {
             background: white;
             border-radius: 32px;
@@ -427,6 +431,24 @@
             }
             .stats-left {
                 gap: 12px;
+            }
+            /* 移动端导航栏只显示图标，隐藏文字 */
+            .nav-btn span, .home-btn span {
+                display: none;
+            }
+            .home-btn, .nav-btn {
+                padding: 6px 12px;
+                font-size: 1.2rem;
+            }
+            /* 进度栏只保留图标+数字 */
+            .stats-left .progress-label,
+            .stats-left .score-label,
+            .stats-left .skipped-label {
+                display: none;
+            }
+            .timer-display, .status-badge, .back-to-current-btn {
+                padding: 4px 10px;
+                font-size: 0.65rem;
             }
         }
         @media (max-width: 480px) {
@@ -511,7 +533,6 @@
             margin-bottom: 0.8rem;
         }
         .highlight-word { background-color: #FEF08A; font-weight: bold; border-radius: 4px; padding: 0 2px; }
-        /* 滑动提示 (仅移动端显示) */
         .swipe-hint {
             text-align: center;
             font-size: 0.7rem;
@@ -523,6 +544,57 @@
                 display: none;
             }
         }
+
+        /* 总结弹窗中的可折叠单词卡片样式 */
+        .mistake-item {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .mistake-summary {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            cursor: pointer;
+            background: #F8FAFC;
+            transition: background 0.2s;
+        }
+        .mistake-summary:hover {
+            background: #EEF2FF;
+        }
+        .word-status {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .status-badge-small {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 30px;
+            background: #FEE2E2;
+            color: #B91C1C;
+        }
+        .status-badge-small.skipped {
+            background: #FFF3E0;
+            color: #B45309;
+        }
+        .mistake-detail {
+            padding: 12px 16px;
+            border-top: 1px solid #E2E8F0;
+            background: white;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .mistake-detail p {
+            margin: 6px 0;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #4B5563;
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
@@ -532,12 +604,10 @@
             <h1>📖 中考词汇闪卡</h1>
             <select id="current-bank-select" onchange="switchBank(this.value)" class="bank-select"></select>
         </div>
-        <div style="display: flex; gap: 12px; align-items: center;">
-            <a href="https://derekmaodengxin.github.io/index.html" class="home-btn">🏠 返回主页</a>
-            <nav class="nav">
-                <button class="nav-btn active" data-tab="game" onclick="switchTab('game')">🎮 游戏模式</button>
-                <button class="nav-btn" data-tab="editor" onclick="switchTab('editor')">✏️ 词库编辑</button>
-            </nav>
+        <div class="action-buttons">
+            <a href="https://derekmaodengxin.github.io/index.html" class="home-btn">🏠 <span>主页</span></a>
+            <button class="nav-btn active" data-tab="game" onclick="switchTab('game')">🎮 <span>游戏</span></button>
+            <button class="nav-btn" data-tab="editor" onclick="switchTab('editor')">✏️ <span>编辑</span></button>
         </div>
     </header>
 
@@ -548,13 +618,13 @@
                 <div class="stats-panel">
                     <div class="stats-row">
                         <div class="stats-left">
-                            <span id="progress-text">📊 进度: 0/0</span>
-                            <span id="score-text">⭐ 得分: 0</span>
-                            <span id="skipped-text" style="color:#F59E0B;">⏭️ 跳过: 0</span>
+                            <span><span class="progress-label">📊 进度: </span><span id="progress-text">0/0</span></span>
+                            <span><span class="score-label">⭐ 得分: </span><span id="score-text">0</span></span>
+                            <span><span class="skipped-label">⏭️ 跳过: </span><span id="skipped-text">0</span></span>
                         </div>
                         <div class="stats-right">
                             <span id="timer-text" class="timer-display">⏱️ 00:00</span>
-                            <span id="status-badge" class="review-badge">📖 学习中</span>
+                            <span id="status-badge" class="status-badge">📖 学习中</span>
                             <button id="back-to-current-btn" class="back-to-current-btn" onclick="jumpToCurrentProgress()">📍 回到当前</button>
                         </div>
                     </div>
@@ -680,7 +750,7 @@
     </div>
 </div>
 
-<!-- 结算弹窗 -->
+<!-- 结算弹窗 - 可展开详情 -->
 <div id="result-modal" style="display: none; position: fixed; inset:0; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; padding: 16px;">
     <div style="background: white; border-radius: 40px; width: 95%; max-width: 1000px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden;">
         <div style="padding: 16px 20px 8px; text-align: center; border-bottom: 1px solid #E2E8F0;">
@@ -688,7 +758,9 @@
             <p id="final-score" style="margin: 6px 0; font-weight: bold;"></p>
             <p id="total-time-display" style="margin: 4px 0; color: #4F46E5;"></p>
         </div>
-        <div id="mistake-report-area" style="flex: 1; overflow-y: auto; padding: 16px 20px; background: #F8FAFC;"></div>
+        <div id="mistake-report-area" style="flex: 1; overflow-y: auto; padding: 16px 20px; background: #F8FAFC;">
+            <!-- 动态生成的可折叠列表将注入此处 -->
+        </div>
         <div id="encouragement-message" style="padding: 8px 20px 12px; font-style: italic; text-align: center;"></div>
         <div style="padding: 12px 20px 20px; display: flex; justify-content: center;">
             <button onclick="closeModal()" class="btn-primary" style="padding: 8px 32px;">再来一轮</button>
@@ -836,7 +908,7 @@
         updateProgressStats();
         updateStatusBadge();
         resetCardToDefault();
-        // 确保游戏模式激活，编辑器隐藏（修复分发版默认打开编辑器的问题）
+        // 确保游戏模式激活
         document.getElementById('game-tab').classList.add('active');
         document.getElementById('editor-tab').classList.remove('active');
         document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -857,10 +929,8 @@
             const diff = e.changedTouches[0].screenX - touchStartX;
             if (Math.abs(diff) > 40) {
                 if (diff > 0) {
-                    // 右滑 -> 记住了
                     handleAnswer('remember');
                 } else {
-                    // 左滑 -> 没记住
                     handleAnswer('forget');
                 }
                 e.preventDefault();
@@ -934,7 +1004,13 @@
     
     function startGame(){
         if(!words.length) return alert('当前词库为空，请先在词库编辑中添加单词');
-        gameState.sessionWords = words.map(w => ({ ...w, status: 'pending' }));
+        // 随机排序题库
+        const shuffled = [...words];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        gameState.sessionWords = shuffled.map(w => ({ ...w, status: 'pending' }));
         gameState.currentIndex = 0;
         gameState.score = 0;
         gameState.skippedCount = 0;
@@ -1122,9 +1198,9 @@
         let processed = gameState.sessionWords.filter(w => w.status !== 'pending').length;
         let percent = total>0 ? (processed/total)*100 : 0;
         document.getElementById('progress-fill').style.width = percent+'%';
-        document.getElementById('progress-text').innerHTML = `📊 进度: ${processed}/${total}`;
-        document.getElementById('score-text').innerHTML = `⭐ 得分: ${gameState.score}`;
-        document.getElementById('skipped-text').innerHTML = `⏭️ 跳过: ${gameState.skippedCount}`;
+        document.getElementById('progress-text').innerText = `${processed}/${total}`;
+        document.getElementById('score-text').innerText = `${gameState.score}`;
+        document.getElementById('skipped-text').innerText = `${gameState.skippedCount}`;
     }
     
     function checkGameCompletion(){
@@ -1139,40 +1215,73 @@
         let totalWords = gameState.sessionWords.length;
         document.getElementById('final-score').innerHTML = `🎯 记住了 ${gameState.score} / ${totalWords} 个单词，跳过 ${gameState.skippedCount} 个`;
         
-        // 按学生分组统计未掌握（wrong）的单词
-        let studentMistakes = {};
+        // 收集所有未掌握（wrong）和跳过（skipped）的单词详情
+        let failedItems = [];
         for(let w of gameState.sessionWords){
-            if(w.status === 'wrong'){
-                let student = gameState.wrongRecords.find(r => r.word === w.word)?.student || '优秀的你';
-                if(!studentMistakes[student]) studentMistakes[student] = [];
-                studentMistakes[student].push(w.word);
+            if(w.status === 'wrong' || w.status === 'skipped'){
+                let studentName = '优秀的你';
+                if(w.status === 'wrong'){
+                    // 从 wrongRecords 中找到对应的学生名（可能有多个学生错同一个词，这里简化：取第一个匹配的学生）
+                    let record = gameState.wrongRecords.find(r => r.word === w.word);
+                    if(record) studentName = record.student;
+                }
+                failedItems.push({
+                    word: w.word,
+                    pronunciation: w.pronunciation || '',
+                    pos: w.pos || '',
+                    meaning: w.meaning,
+                    example: w.example,
+                    translation: w.translation || '',
+                    status: w.status === 'wrong' ? '未掌握' : '跳过',
+                    student: studentName,
+                    highlight: w.highlight || ''
+                });
             }
         }
         
         let reportHtml = '';
-        if(Object.keys(studentMistakes).length > 0){
-            reportHtml = `<div style="margin-bottom: 16px;"><strong>📌 未掌握单词明细：</strong></div>`;
-            for(let student in studentMistakes){
-                reportHtml += `<div style="margin-bottom: 12px; padding: 8px; background: white; border-radius: 16px;">
-                    <div style="font-weight: bold; color: #B91C1C;">👤 ${student}</div>
-                    <div style="margin-top: 4px;">未掌握: ${studentMistakes[student].join(', ')}</div>
-                </div>`;
+        if(failedItems.length > 0){
+            reportHtml = `<div style="margin-bottom: 12px;"><strong>📌 待复习单词列表（点击展开详情）</strong></div>`;
+            for(let item of failedItems){
+                // 高亮例句中的单词
+                const highlightedExample = updateExampleDisplay(item.example, item.word, item.highlight);
+                const statusClass = item.status === '未掌握' ? '' : 'skipped';
+                reportHtml += `
+                    <div class="mistake-item">
+                        <div class="mistake-summary" onclick="toggleDetail(this)">
+                            <span class="word-status">${escapeHtml(item.word)}</span>
+                            <span class="status-badge-small ${statusClass}">${item.status}</span>
+                        </div>
+                        <div class="mistake-detail" style="display: none;">
+                            <p><span class="detail-label">🎓 学生：</span>${escapeHtml(item.student)}</p>
+                            <p><span class="detail-label">🔊 音标：</span>${escapeHtml(item.pronunciation)}</p>
+                            <p><span class="detail-label">📌 词性：</span>${escapeHtml(item.pos)}</p>
+                            <p><span class="detail-label">📖 释义：</span>${escapeHtml(item.meaning)}</p>
+                            <p><span class="detail-label">✍️ 例句：</span>${highlightedExample || '无例句'}</p>
+                            ${item.translation ? `<p><span class="detail-label">🌏 翻译：</span>${escapeHtml(item.translation)}</p>` : ''}
+                        </div>
+                    </div>
+                `;
             }
         } else {
-            reportHtml = '<p style="color:#10B981; text-align:center;">✅ 太棒了！没有同学留下错词！</p>';
+            reportHtml = '<p style="color:#10B981; text-align:center;">✅ 太棒了！没有错词也没有跳过，全部掌握！</p>';
         }
-        // 如果有跳过单词也显示
-        let skippedWords = gameState.sessionWords.filter(w => w.status === 'skipped').map(w => w.word);
-        if(skippedWords.length > 0){
-            reportHtml += `<div style="margin-top: 16px; padding: 8px; background: #FFF3E0; border-radius: 16px;">
-                <strong>⏭️ 被跳过的单词：</strong> ${skippedWords.join(', ')}
-            </div>`;
-        }
+        
         document.getElementById('mistake-report-area').innerHTML = reportHtml;
         document.getElementById('encouragement-message').innerHTML = getRandomEncouragement();
         document.getElementById('result-modal').style.display = 'flex';
         playSuccessSound();
     }
+    
+    // 全局函数，用于切换详情显示
+    window.toggleDetail = function(el) {
+        const detail = el.nextElementSibling;
+        if(detail.style.display === 'none'){
+            detail.style.display = 'block';
+        } else {
+            detail.style.display = 'none';
+        }
+    };
     
     function closeModal(){
         document.getElementById('result-modal').style.display = 'none';
@@ -1292,7 +1401,6 @@
     }
     function generateDistributionVersion(){
         let dataToInject = { banks: allBanks, students, audioAutoExample, flipReadExample, currentBankName };
-        // 注入脚本，并且强制确保游戏模式激活
         let injection = `<script>const injectedData = ${JSON.stringify(dataToInject)}; localStorage.setItem('english_flashcards_banks', JSON.stringify(injectedData.banks)); localStorage.setItem('english_students', injectedData.students); localStorage.setItem('audio_auto_example', injectedData.audioAutoExample); localStorage.setItem('flip_read_example', injectedData.flipReadExample); localStorage.setItem('english_flashcards_current_bank', injectedData.currentBankName); document.getElementById('game-tab').classList.add('active'); document.getElementById('editor-tab').classList.remove('active'); document.querySelectorAll('.nav-btn').forEach(btn => { if(btn.dataset.tab === 'game') btn.classList.add('active'); else btn.classList.remove('active'); });<\/script>`;
         let final = document.documentElement.outerHTML.replace('</head>', injection + '</head>');
         document.getElementById('dist-code-area').value = final;
