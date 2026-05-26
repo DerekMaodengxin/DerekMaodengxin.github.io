@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>英语中考词汇闪卡 - 最终版</title>
+    <title>英语中考词汇闪卡 - 最终动画版</title>
     <style>
         * {
             margin: 0;
@@ -69,7 +69,6 @@
             color: #4338CA;
         }
 
-        /* 统一按钮样式 */
         .action-buttons {
             display: flex;
             gap: 12px;
@@ -122,7 +121,6 @@
             display: block;
         }
 
-        /* 游戏模式内部布局 */
         .game-inner {
             max-width: 700px;
             margin: 0 auto;
@@ -240,7 +238,6 @@
             height: 400px;
             margin: 0;
             touch-action: pan-y pinch-zoom;
-            position: relative;
         }
         .card {
             width: 100%;
@@ -249,36 +246,6 @@
             transform-style: preserve-3d;
             transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             cursor: pointer;
-            will-change: transform;
-        }
-        /* 卡片切换动画类 */
-        .card-slide-out-left {
-            animation: slideOutLeft 0.2s ease forwards;
-        }
-        .card-slide-out-right {
-            animation: slideOutRight 0.2s ease forwards;
-        }
-        .card-slide-in-left {
-            animation: slideInLeft 0.2s ease forwards;
-        }
-        .card-slide-in-right {
-            animation: slideInRight 0.2s ease forwards;
-        }
-        @keyframes slideOutLeft {
-            from { transform: translateX(0) rotateY(0deg); opacity: 1; }
-            to { transform: translateX(-100%) rotateY(0deg); opacity: 0; }
-        }
-        @keyframes slideOutRight {
-            from { transform: translateX(0) rotateY(0deg); opacity: 1; }
-            to { transform: translateX(100%) rotateY(0deg); opacity: 0; }
-        }
-        @keyframes slideInLeft {
-            from { transform: translateX(-100%) rotateY(0deg); opacity: 0; }
-            to { transform: translateX(0) rotateY(0deg); opacity: 1; }
-        }
-        @keyframes slideInRight {
-            from { transform: translateX(100%) rotateY(0deg); opacity: 0; }
-            to { transform: translateX(0) rotateY(0deg); opacity: 1; }
         }
         .card.is-flipped {
             transform: rotateY(180deg);
@@ -429,7 +396,6 @@
             opacity: 0.4;
             pointer-events: none;
         }
-        /* 随机点名 - 移动端隐藏 */
         .random-card {
             background: white;
             border-radius: 32px;
@@ -439,9 +405,8 @@
             flex-shrink: 0;
         }
         
-        /* ========== 移动端专用样式 ========== */
+        /* 移动端专用样式 */
         @media (max-width: 768px) {
-            /* 头部一行布局，缩小元素，话题下拉框拉长 */
             .header {
                 flex-wrap: nowrap;
                 padding: 6px 12px;
@@ -474,8 +439,6 @@
             .home-btn span, .nav-btn span {
                 display: none;
             }
-
-            /* 进度栏改为两行布局，恢复文字标签 */
             .stats-panel {
                 padding: 8px 12px;
             }
@@ -519,8 +482,6 @@
                 line-height: 1.2;
                 flex: 1.5;
             }
-
-            /* 卡片高度压缩，按钮上移 */
             .card-container {
                 height: 340px;
             }
@@ -528,13 +489,9 @@
                 margin-top: 0;
                 margin-bottom: 6px;
             }
-
-            /* 删除滑动提示 */
             .swipe-hint {
                 display: none;
             }
-
-            /* 底部说明移动端专用 */
             footer {
                 display: none;
             }
@@ -545,13 +502,9 @@
                 font-size: 0.6rem;
                 color: #6C757D;
             }
-
-            /* 随机点名挑战在移动端正确隐藏 */
             .random-card {
                 display: none;
             }
-
-            /* 其他微调 */
             .nav-arrow {
                 width: 44px;
                 height: 44px;
@@ -593,7 +546,6 @@
                 justify-content: space-between;
             }
         }
-        /* PC端隐藏移动端专用元素 */
         .mobile-footer {
             display: none;
         }
@@ -603,7 +555,17 @@
             }
         }
 
-        /* 总结弹窗中的可折叠单词卡片样式 */
+        /* 卡片切换动画 */
+        .card-fade-out {
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+        .card-fade-in {
+            opacity: 1;
+            transition: opacity 0.15s ease;
+        }
+
+        /* 总结弹窗样式 */
         .mistake-item {
             background: white;
             border-radius: 20px;
@@ -737,7 +699,6 @@
     </header>
 
     <div class="main-content">
-        <!-- 游戏标签页 -->
         <section id="game-tab" class="tab-content active">
             <div class="game-inner">
                 <div class="stats-panel">
@@ -763,7 +724,7 @@
                     <div class="card-container" id="card-container">
                         <div class="card" id="flashcard" onclick="flipCard()">
                             <div class="card-face card-front">
-                                <div class="front-icon">📖 TERM</div>  <!-- 原 "✨ WORD" 改为 "📖 TERM" -->
+                                <div class="front-icon">📖 词条</div>
                                 <h2 id="word-display">Ready?</h2>
                                 <div id="pronunciation-front" class="pronunciation"></div>
                                 <button id="audio-btn" class="audio-icon-btn" onclick="event.stopPropagation(); playCurrentAudio()">
@@ -822,7 +783,6 @@
             </div>
         </section>
 
-        <!-- 编辑器标签页 - 独立滚动 -->
         <section id="editor-tab" class="tab-content">
             <div style="background: white; border-radius: 2rem; padding: 1rem; margin-bottom: 20px;">
                 <div class="flex-between" style="margin-bottom: 12px; flex-wrap:wrap; gap:10px;">
@@ -876,7 +836,7 @@
     </div>
 </div>
 
-<!-- 结算弹窗 - 可展开详情 -->
+<!-- 结算弹窗 -->
 <div id="result-modal" style="display: none; position: fixed; inset:0; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; padding: 16px;">
     <div style="background: white; border-radius: 40px; width: 95%; max-width: 1000px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden;">
         <div style="padding: 16px 20px 8px; text-align: center; border-bottom: 1px solid #E2E8F0;">
@@ -884,9 +844,7 @@
             <p id="final-score" style="margin: 6px 0; font-weight: bold;"></p>
             <p id="total-time-display" style="margin: 4px 0; color: #4F46E5;"></p>
         </div>
-        <div id="mistake-report-area" style="flex: 1; overflow-y: auto; padding: 16px 20px; background: #F8FAFC;">
-            <!-- 动态生成的可折叠列表将注入此处 -->
-        </div>
+        <div id="mistake-report-area" style="flex: 1; overflow-y: auto; padding: 16px 20px; background: #F8FAFC;"></div>
         <div id="encouragement-message" style="padding: 8px 20px 12px; font-style: italic; text-align: center;"></div>
         <div style="padding: 12px 20px 20px; display: flex; justify-content: center;">
             <button onclick="closeModal()" class="btn-primary" style="padding: 8px 32px;">再来一轮</button>
@@ -918,7 +876,6 @@
     let flipReadExample = true;
     let randomEnabled = false;
     
-    // 公平点名池
     let currentRandomPool = [];
     let fullStudentList = [];
     
@@ -1034,7 +991,6 @@
         updateProgressStats();
         updateStatusBadge();
         resetCardToDefault();
-        // 确保游戏模式激活
         document.getElementById('game-tab').classList.add('active');
         document.getElementById('editor-tab').classList.remove('active');
         document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -1130,7 +1086,6 @@
     
     function startGame(){
         if(!words.length) return alert('当前词库为空，请先在词库编辑中添加单词');
-        // 随机排序题库
         const shuffled = [...words];
         for (let i = shuffled.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -1147,7 +1102,7 @@
         document.getElementById('start-btn').classList.add('hidden');
         document.getElementById('action-btns').style.display = 'flex';
         updateActionButtonsState();
-        showCurrentWord();
+        showCurrentWordWithAnimation();
         updateProgressStats();
         updateStatusBadge();
         resetRandomPool();
@@ -1174,25 +1129,44 @@
         document.getElementById('timer-text').innerHTML = `⏱️ 00:00`;
     }
     
-    function showCurrentWord(){
-        let c = gameState.sessionWords[gameState.currentIndex];
-        document.getElementById('word-display').innerText = c.word;
-        const pronHtml = c.pronunciation ? `<span class="pronunciation">${escapeHtml(c.pronunciation)}</span>` : '';
-        document.getElementById('pronunciation-front').innerHTML = pronHtml;
-        document.getElementById('back-word-display').innerText = c.word;
-        document.getElementById('pronunciation-back').innerHTML = pronHtml;
-        document.getElementById('meaning-display').innerText = c.meaning;
-        const highlightedExample = updateExampleDisplay(c.example, c.word, c.highlight);
-        document.getElementById('example-display').innerHTML = highlightedExample || '无例句';
-        document.getElementById('translation-display').innerText = c.translation || '';
-        let posSpan = document.getElementById('pos-display');
-        if(c.pos){ posSpan.innerText=c.pos; posSpan.classList.remove('hidden'); } else posSpan.classList.add('hidden');
+    // 带淡入淡出动画的单词切换
+    function showCurrentWordWithAnimation() {
         const cardElem = document.getElementById('flashcard');
-        cardElem.classList.remove('is-flipped');
-        gameState.isFlipped = false;
-        updateActionButtonsState();
-        updateStatusBadge();
-        playCurrentAudio();
+        // 添加淡出动画
+        cardElem.classList.add('card-fade-out');
+        setTimeout(() => {
+            // 更新卡片内容（正面和背面数据）
+            let c = gameState.sessionWords[gameState.currentIndex];
+            document.getElementById('word-display').innerText = c.word;
+            const pronHtml = c.pronunciation ? `<span class="pronunciation">${escapeHtml(c.pronunciation)}</span>` : '';
+            document.getElementById('pronunciation-front').innerHTML = pronHtml;
+            document.getElementById('back-word-display').innerText = c.word;
+            document.getElementById('pronunciation-back').innerHTML = pronHtml;
+            document.getElementById('meaning-display').innerText = c.meaning;
+            const highlightedExample = updateExampleDisplay(c.example, c.word, c.highlight);
+            document.getElementById('example-display').innerHTML = highlightedExample || '无例句';
+            document.getElementById('translation-display').innerText = c.translation || '';
+            let posSpan = document.getElementById('pos-display');
+            if(c.pos){ posSpan.innerText=c.pos; posSpan.classList.remove('hidden'); } else posSpan.classList.add('hidden');
+            // 重置翻转状态为正面
+            cardElem.classList.remove('is-flipped');
+            gameState.isFlipped = false;
+            // 更新按钮状态和UI
+            updateActionButtonsState();
+            updateStatusBadge();
+            playCurrentAudio();
+            // 移除淡出，添加淡入
+            cardElem.classList.remove('card-fade-out');
+            cardElem.classList.add('card-fade-in');
+            setTimeout(() => {
+                cardElem.classList.remove('card-fade-in');
+            }, 150);
+        }, 130);
+    }
+    
+    // 为了保持代码统一，将原 showCurrentWord 替换为带动画的版本
+    function showCurrentWord() {
+        showCurrentWordWithAnimation();
     }
     
     function updateStatusBadge(){
@@ -1282,18 +1256,8 @@
         if(!gameState.isPlaying) return;
         let newIndex = gameState.currentIndex - 1;
         if(newIndex < 0) return;
-        // 添加滑动动画
-        const card = document.getElementById('flashcard');
-        card.classList.add('card-slide-out-right');
-        setTimeout(() => {
-            gameState.currentIndex = newIndex;
-            showCurrentWord();
-            card.classList.remove('card-slide-out-right');
-            card.classList.add('card-slide-in-left');
-            setTimeout(() => {
-                card.classList.remove('card-slide-in-left');
-            }, 200);
-        }, 150);
+        gameState.currentIndex = newIndex;
+        showCurrentWord();
         if(randomEnabled) refreshRandomStudent();
     }
     
@@ -1305,18 +1269,8 @@
         } else {
             let newIndex = gameState.currentIndex + 1;
             if(newIndex >= gameState.sessionWords.length) return;
-            // 添加滑动动画
-            const card = document.getElementById('flashcard');
-            card.classList.add('card-slide-out-left');
-            setTimeout(() => {
-                gameState.currentIndex = newIndex;
-                showCurrentWord();
-                card.classList.remove('card-slide-out-left');
-                card.classList.add('card-slide-in-right');
-                setTimeout(() => {
-                    card.classList.remove('card-slide-in-right');
-                }, 200);
-            }, 150);
+            gameState.currentIndex = newIndex;
+            showCurrentWord();
             if(randomEnabled) refreshRandomStudent();
         }
     }
@@ -1331,7 +1285,6 @@
             }
         }
         if(pendingIndex !== -1 && pendingIndex !== gameState.currentIndex){
-            // 直接跳转，不加动画（或简单淡入淡出）
             gameState.currentIndex = pendingIndex;
             showCurrentWord();
             if(randomEnabled) refreshRandomStudent();
@@ -1362,7 +1315,6 @@
         let totalWords = gameState.sessionWords.length;
         document.getElementById('final-score').innerHTML = `🎯 记住了 ${gameState.score} / ${totalWords} 个单词，跳过 ${gameState.skippedCount} 个`;
         
-        // 收集所有未掌握（wrong）和跳过（skipped）的单词详情
         let failedItems = [];
         for(let w of gameState.sessionWords){
             if(w.status === 'wrong' || w.status === 'skipped'){
@@ -1411,21 +1363,16 @@
         } else {
             reportHtml = '<p style="color:#10B981; text-align:center;">✅ 太棒了！没有错词也没有跳过，全部掌握！</p>';
         }
-        
         document.getElementById('mistake-report-area').innerHTML = reportHtml;
         document.getElementById('encouragement-message').innerHTML = getRandomEncouragement();
         document.getElementById('result-modal').style.display = 'flex';
         playSuccessSound();
     }
     
-    // 全局函数，用于切换详情显示
     window.toggleDetail = function(el) {
         const detail = el.nextElementSibling;
-        if(detail.style.display === 'none'){
-            detail.style.display = 'block';
-        } else {
-            detail.style.display = 'none';
-        }
+        if(detail.style.display === 'none') detail.style.display = 'block';
+        else detail.style.display = 'none';
     };
     
     function closeModal(){
