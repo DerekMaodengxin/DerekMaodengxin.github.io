@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'index.html': '🏠 首页 - 🧬不规则动词',
         'nonfinite-verbs.html': '🧩 非谓语动词搭配专题',
         'flashcard.html': '🃏 抽认卡',
+        'grade7flashcard.html': '🃏 七年级抽认卡',
         'verbs1-40.html': '⚡ 动词列表 1-40',
         'verbs41-80.html': '⚡ 动词列表 41-80',
         'verbs81-130.html': '⚡ 动词列表 81-130',
@@ -85,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <a href="index.html" class="${currentPage === 'index.html' ? 'active' : ''}">🏠 首页-不规则动词</a>
             <a href="nonfinite-verbs.html" class="${currentPage === 'nonfinite-verbs.html' ? 'active' : ''}">🧩 非谓语动词搭配</a>
             <a href="flashcard.html" class="${currentPage === 'flashcard.html' ? 'active' : ''}">🃏 抽认卡</a>
+            <a href="grade7flashcard.html" class="${currentPage === 'grade7flashcard.html' ? 'active' : ''}">🃏 七年级闪卡</a>
                        
             <details class="dropdown" ${currentPage.startsWith('verbs') ? 'open' : ''}>
                 <summary>📚 动词列表（1-416） </summary>
